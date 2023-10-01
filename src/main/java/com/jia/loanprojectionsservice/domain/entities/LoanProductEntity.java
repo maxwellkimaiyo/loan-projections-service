@@ -1,6 +1,6 @@
 package com.jia.loanprojectionsservice.domain.entities;
 
-import com.jia.loanprojectionsservice.domain.enums.LoanTypes;
+import com.jia.loanprojectionsservice.domain.entities.enums.LoanTypes;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,8 +15,7 @@ public class LoanProductEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private LoanTypes type;
+    private String type;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "loan_duration_id", referencedColumnName = "id")
