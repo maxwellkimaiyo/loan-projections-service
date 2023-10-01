@@ -1,1 +1,23 @@
+version: "3.8"
 services:
+  postgres:
+    image: postgres:12
+    container_name: postgres
+    hostname: postgres
+    restart: unless-stopped
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_DB_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "postgres", "-U", "project"]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+
+volumes:
+  pgdata:
