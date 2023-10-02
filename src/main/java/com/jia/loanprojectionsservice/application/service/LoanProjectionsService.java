@@ -4,7 +4,6 @@ import com.jia.loanprojectionsservice.infrastructure.controller.request.LoanProj
 import com.jia.loanprojectionsservice.infrastructure.controller.response.LoanProjectionResponse;
 
 public interface LoanProjectionsService {
-
     LoanProjectionResponse getLoanFeeProjections(LoanProjectionRequest request);
     LoanProjectionResponse getLoanInstallmentProjections(LoanProjectionRequest request);
 

@@ -1,11 +1,14 @@
 package com.jia.loanprojectionsservice.infrastructure.controller.exceptionHandler;
 
 
-import com.jia.loanprojectionsservice.application.exceptions.AppException;
+import com.jia.loanprojectionsservice.application.exceptions.LoanProjectionException;
 import com.jia.loanprojectionsservice.infrastructure.controller.response.CustomErrorsDTO;
 import com.jia.loanprojectionsservice.infrastructure.controller.response.GenericResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,11 +18,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.context.support.DefaultMessageSourceResolvable;
-
 /**
  * The type Global exception handler.
  */
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -34,12 +36,11 @@ public class GlobalExceptionHandler {
      * @param e the e
      * @return the response entity
      */
-    @ExceptionHandler(AppException.class)
-    public ResponseEntity<GenericResponse<Object>> handleAppException(AppException e) {
-        LOGGER.error("Handling application error: ", e);
+    @ExceptionHandler(LoanProjectionException.class)
+    public ResponseEntity<GenericResponse<Object>> handleAppException(LoanProjectionException e) {
+        LOGGER.error("Handling application error: {}",e.getMessage(), e);
         return buildErrorResponseEntity(e.getMessage(), e.getStatus());
     }
-
 
     /**
      * Handle validation exception response entity.
@@ -49,7 +50,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<GenericResponse<Object>> handleValidationExceptions(MethodArgumentNotValidException e) {
-        LOGGER.error("Handling validation error:", e);
+        LOGGER.error("Handling validation error: {}",e.getMessage(), e);
 
         List<String> errors = e.getBindingResult()
                 .getFieldErrors()
@@ -69,7 +70,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<GenericResponse<Object>> handleGenericException(Exception e) {
-        LOGGER.error("Handling unexpected error: ", e.getCause());
+        LOGGER.error("Handling unexpected error: {}",e.getMessage(), e);
         return buildErrorResponseEntity();
     }
 
