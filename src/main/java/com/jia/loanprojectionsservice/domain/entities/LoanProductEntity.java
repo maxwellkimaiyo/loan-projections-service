@@ -1,6 +1,5 @@
 package com.jia.loanprojectionsservice.domain.entities;
 
-import com.jia.loanprojectionsservice.domain.entities.enums.LoanTypes;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

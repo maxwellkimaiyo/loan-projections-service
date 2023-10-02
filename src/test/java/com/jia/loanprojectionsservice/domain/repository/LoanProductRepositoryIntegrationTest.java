@@ -17,8 +17,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.Optional;
 
-import static com.jia.loanprojectionsservice.domain.entities.enums.LoanTypes.MONTHLY;
-import static com.jia.loanprojectionsservice.domain.entities.enums.LoanTypes.WEEKLY;
+import static com.jia.loanprojectionsservice.domain.entities.LoanTypes.MONTHLY;
+import static com.jia.loanprojectionsservice.domain.entities.LoanTypes.WEEKLY;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
