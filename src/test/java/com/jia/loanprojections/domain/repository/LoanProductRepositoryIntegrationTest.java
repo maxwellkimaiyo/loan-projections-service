@@ -21,9 +21,6 @@ import static com.jia.loanprojections.domain.enums.LoanInstallmentTypes.MONTHLY;
 import static com.jia.loanprojections.domain.enums.LoanInstallmentTypes.WEEKLY;
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * JPA tests with datasource configured via standard properties files
- */
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -51,29 +48,33 @@ class LoanProductRepositoryIntegrationTest {
     }
     @Test
     @Transactional
-    @DisplayName("When find by weekly type then return weekly LoanProductEntity")
-    void findByWeeklyTypeTest() {
-        // given
+    @DisplayName("Test find by weekly type then return weekly LoanProductEntity")
+    void testFindByWeeklyType() {
+        // Arrange
         String loanTypes = WEEKLY.name();
-        // when
-        Optional<LoanProductEntity> found = loanProductRepository.findByLoanInstalmentType(loanTypes);
-        // then
-        Assertions.assertTrue(found.isPresent());
-        LoanProductEntity entity = found.get();
+
+        // Act
+        Optional<LoanProductEntity> actual = loanProductRepository.findByLoanInstalmentType(loanTypes);
+
+        // Assert
+        Assertions.assertTrue(actual.isPresent());
+        LoanProductEntity entity = actual.get();
         assertThat(entity.getType()).isEqualTo(loanTypes);
         Assertions.assertEquals(50.0, entity.getLoanFee().getServiceFeeCap());
     }
     @Test
     @Transactional
-    @DisplayName("When find by monthly type then return monthly LoanProductEntity")
-    void findByMonthlyTypeTest() {
-        // given
+    @DisplayName("Test find by monthly type then return monthly LoanProductEntity")
+    void testFindByMonthlyType() {
+        // Arrange
         String loanTypes = MONTHLY.name();
-        // when
-        Optional<LoanProductEntity> found = loanProductRepository.findByLoanInstalmentType(loanTypes);
-        // then
-        Assertions.assertTrue(found.isPresent());
-        LoanProductEntity entity = found.get();
+
+        // Act
+        Optional<LoanProductEntity> actual = loanProductRepository.findByLoanInstalmentType(loanTypes);
+
+        // Assert
+        Assertions.assertTrue(actual.isPresent());
+        LoanProductEntity entity = actual.get();
         assertThat(entity.getType()).isEqualTo(loanTypes);
         Assertions.assertEquals(100.0, entity.getLoanFee().getServiceFeeCap());
     }

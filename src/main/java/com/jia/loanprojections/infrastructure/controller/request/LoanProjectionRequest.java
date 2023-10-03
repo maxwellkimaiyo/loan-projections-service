@@ -36,7 +36,7 @@ public class LoanProjectionRequest {
     @NotNull(message = "The [loan_duration_unit] field cannot be null. Please provide a valid value for the loan duration unit.")
     @JsonProperty("loan_duration_unit")
     @JsonDeserialize(using = ToUpperCaseDeserializer.class)
-    @Pattern(regexp = "^(MONTHS|WEEKS|DAYS)$", message = "Invalid [loan_duration_unit] value. Please specify the duration unit as either 'days', 'weeks' or 'months'.")
+    @Pattern(regexp = "^(MONTHS|WEEKS)$", message = "Invalid [loan_duration_unit] value. Please specify the duration unit as either 'weeks' or 'months'.")
     private String loanDurationUnit;
 
 
