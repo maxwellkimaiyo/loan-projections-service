@@ -15,7 +15,7 @@ public class LoanProjectionCalculator {
      * @return interest amount
      */
     public double calculateInterestAmount(double principalAmount, double interestRate) {
-        return (interestRate / PERCENTAGE) * principalAmount;
+        return Math.round((interestRate / PERCENTAGE) * principalAmount);
     }
 
     /**
@@ -27,7 +27,7 @@ public class LoanProjectionCalculator {
      */
     public double calculateServiceFee(double principalAmount, double interestRate, double serviceFeeCap) {
         double serviceFee =  (interestRate / PERCENTAGE) * principalAmount;
-       return Math.min(serviceFeeCap, serviceFee);
+       return Math.min(serviceFeeCap, Math.round(serviceFee));
     }
 
     /**
@@ -37,6 +37,6 @@ public class LoanProjectionCalculator {
      * @return instalment amount
      */
     public double calculateInstalmentAmount(double principalAmount, int loanDuration) {
-        return principalAmount / loanDuration;
+        return Math.round(principalAmount / loanDuration);
     }
 }

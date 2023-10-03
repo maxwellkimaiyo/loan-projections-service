@@ -8,9 +8,11 @@ import com.jia.loanprojections.infrastructure.controller.request.LoanProjectionR
 import com.jia.loanprojections.infrastructure.controller.response.LoanProjectionResponse;
 import com.jia.loanprojections.infrastructure.controller.response.LoanProjections;
 import com.jia.loanprojections.application.util.DateUtil;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -26,6 +28,7 @@ import static com.jia.loanprojections.domain.enums.LoanInstallmentTypes.WEEKLY;
  * The loan instalment projection service.
  */
 @Service
+@Transactional
 public class LoanInstalmentProjectionsServiceImpl implements LoanInstalmentProjectionsService {
 
     /**
@@ -53,6 +56,7 @@ public class LoanInstalmentProjectionsServiceImpl implements LoanInstalmentProje
      */
 
     @Override
+    @Cacheable(value = "getLoanInstallmentProjections")
     public LoanProjectionResponse getLoanInstallmentProjections(LoanProjectionRequest request) {
         loanProjectionValidation.validateRequest(request);
         try {
@@ -111,7 +115,7 @@ public class LoanInstalmentProjectionsServiceImpl implements LoanInstalmentProje
             }
 
             double totalInstalmentAmount = (interestAmount + instalmentAmount + serviceFee);
-            loanInstalmentProjections.add(new LoanProjections(dateIncurred, totalInstalmentAmount));
+            loanInstalmentProjections.add(new LoanProjections(dateIncurred, (long) totalInstalmentAmount));
 
             if (!isWeeklyInstallment) {
                 monthsSinceLastServiceFee++;

@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class LoanProjections {
 
     private LocalDate date;
-    private double amount;
+    private long amount;
 
 
 }

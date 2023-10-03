@@ -8,9 +8,11 @@ import com.jia.loanprojections.infrastructure.controller.request.LoanProjectionR
 import com.jia.loanprojections.infrastructure.controller.response.LoanProjectionResponse;
 import com.jia.loanprojections.infrastructure.controller.response.LoanProjections;
 import com.jia.loanprojections.application.util.DateUtil;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -26,6 +28,7 @@ import static com.jia.loanprojections.domain.enums.LoanInstallmentTypes.WEEKLY;
  * The loan projection service.
  */
 @Service
+@Transactional
 public class LoanFeeProjectionsServiceImpl implements LoanFeeProjectionsService {
 
     /**
@@ -54,6 +57,7 @@ public class LoanFeeProjectionsServiceImpl implements LoanFeeProjectionsService 
      * @return a list of loan fee projections
      */
     @Override
+    @Cacheable(value = "getLoanFeeProjections")
     public LoanProjectionResponse getLoanFeeProjections(LoanProjectionRequest request) {
         loanProjectionValidation.validateRequest(request);
         try {
@@ -104,14 +108,14 @@ public class LoanFeeProjectionsServiceImpl implements LoanFeeProjectionsService 
 
             if (isWeeklyInstallment && duration % 2 == 0) {
                 double serviceFee = loanProjectionCalculator.calculateServiceFee(principalAmount, serviceInterestRate, serviceFeeCap);
-                loanFeeProjections.add(new LoanProjections(dateIncurred, serviceFee));
+                loanFeeProjections.add(new LoanProjections(dateIncurred, (long) serviceFee));
             } else if (!isWeeklyInstallment && monthsSinceLastServiceFee == 3) {
                 double serviceFee = loanProjectionCalculator.calculateServiceFee(principalAmount, serviceInterestRate, serviceFeeCap);
-                loanFeeProjections.add(new LoanProjections(dateIncurred, serviceFee));
+                loanFeeProjections.add(new LoanProjections(dateIncurred, (long) serviceFee));
                 monthsSinceLastServiceFee = 0;
             }
 
-            loanFeeProjections.add(new LoanProjections(dateIncurred, interestAmount));
+            loanFeeProjections.add(new LoanProjections(dateIncurred, (long) interestAmount));
 
             if (!isWeeklyInstallment) {
                 monthsSinceLastServiceFee++;
