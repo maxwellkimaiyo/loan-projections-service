@@ -1,7 +1,7 @@
 package com.jia.loanprojectionsservice.infrastructure.controller.v1;
 
-import com.jia.loanprojectionsservice.application.service.LoanProjectionsService;
-import com.jia.loanprojectionsservice.application.service.LoanProjectionsServiceImpl;
+import com.jia.loanprojectionsservice.application.service.loanFeeProjection.LoanFeeProjectionsService;
+import com.jia.loanprojectionsservice.application.service.loanInstalmentProjection.LoanInstalmentProjectionsService;
 import com.jia.loanprojectionsservice.infrastructure.controller.request.LoanProjectionRequest;
 import com.jia.loanprojectionsservice.infrastructure.controller.response.GenericResponse;
 import com.jia.loanprojectionsservice.infrastructure.controller.response.LoanProjectionResponse;
@@ -35,18 +35,21 @@ public class LoanProjectionsController {
     /**
      * The loan projection service interface
      */
-    final LoanProjectionsService loanProjectionsService;
+    final LoanFeeProjectionsService loanFeeProjectionsService;
+
+    final LoanInstalmentProjectionsService loanInstalmentProjectionsService;
 
     @Autowired
-    public LoanProjectionsController(LoanProjectionsService loanProjectionsService) {
-        this.loanProjectionsService = loanProjectionsService;
+    public LoanProjectionsController(LoanFeeProjectionsService loanFeeProjectionsService, LoanInstalmentProjectionsService loanInstalmentProjectionsService) {
+        this.loanFeeProjectionsService = loanFeeProjectionsService;
+        this.loanInstalmentProjectionsService = loanInstalmentProjectionsService;
     }
 
     @ApiOperation(value = "Get all applicable fees for a given loan")
     @PostMapping(value = "/projections/fees")
     public ResponseEntity<GenericResponse<LoanProjectionResponse>> getLoanFeeProjections(@Valid @RequestBody LoanProjectionRequest request) {
         LOGGER.debug("Entering in getLoanFeeProjections rest endpoint with body: {} ", request);
-        LoanProjectionResponse response = loanProjectionsService.getLoanFeeProjections(request);
+        LoanProjectionResponse response = loanFeeProjectionsService.getLoanFeeProjections(request);
         return ResponseEntity.ok().body(new GenericResponse<>("Loan fees projections retrieved successfully", response));
     }
 
@@ -54,7 +57,7 @@ public class LoanProjectionsController {
     @PostMapping(value = "/projections/installments")
     public ResponseEntity<GenericResponse<LoanProjectionResponse>> getLoanInstallmentProjections(@Valid @RequestBody LoanProjectionRequest request) {
         LOGGER.debug("Entering in getLoanFeeProjections rest endpoint with body: {} ", request);
-        LoanProjectionResponse response = loanProjectionsService.getLoanInstallmentProjections(request);
+        LoanProjectionResponse response = loanInstalmentProjectionsService.getLoanInstallmentProjections(request);
         return ResponseEntity.ok().body(new GenericResponse<>("Loan installments projections retrieved successfully", response));
     }
 

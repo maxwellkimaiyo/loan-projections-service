@@ -6,10 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @RunWith(SpringRunner.class)
-class LoanProjectionsServiceImplTest {
+class LoanFeeProjectionsServiceImplTest {
 
 
 
@@ -23,5 +21,13 @@ class LoanProjectionsServiceImplTest {
 
     @Test
     void getLoanProductEntity() {
+    }
+
+    @Test
+    void getLoanFeeProjections() {
+    }
+
+    @Test
+    void getLoanInstallmentProjections() {
     }
 }

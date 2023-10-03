@@ -1,6 +1,6 @@
-package com.jia.loanprojectionsservice.application.service;
+package com.jia.loanprojectionsservice.application.service.loanFeeProjection;
 
-import com.jia.loanprojectionsservice.application.exceptions.LoanProjectionException;
+import com.jia.loanprojectionsservice.application.validation.LoanProjectionValidation;
 import com.jia.loanprojectionsservice.domain.entities.LoanProductEntity;
 import com.jia.loanprojectionsservice.domain.repository.LoanProductRepository;
 import com.jia.loanprojectionsservice.infrastructure.controller.request.LoanProjectionRequest;
@@ -10,7 +10,6 @@ import com.jia.loanprojectionsservice.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.jia.loanprojectionsservice.domain.enums.DurationUnitType.weeks;
+import static com.jia.loanprojectionsservice.domain.enums.DurationUnitType.WEEKS;
 import static com.jia.loanprojectionsservice.domain.enums.LoanTypes.MONTHLY;
 import static com.jia.loanprojectionsservice.domain.enums.LoanTypes.WEEKLY;
 
@@ -26,22 +25,27 @@ import static com.jia.loanprojectionsservice.domain.enums.LoanTypes.WEEKLY;
  * The type loan projection service.
  */
 @Service
-public class LoanProjectionsServiceImpl implements LoanProjectionsService {
+public class LoanFeeProjectionsServiceImpl implements LoanFeeProjectionsService {
 
     /**
      * The Logging.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoanProjectionsServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoanFeeProjectionsServiceImpl.class);
 
 
     /**
      * The type loan product repository
      */
     final LoanProductRepository loanProductRepository;
+    /**
+     * The type loan projection validation
+     */
+    final LoanProjectionValidation loanProjectionValidation;
 
     @Autowired
-    public LoanProjectionsServiceImpl(LoanProductRepository loanProductRepository) {
+    public LoanFeeProjectionsServiceImpl(LoanProductRepository loanProductRepository, LoanProjectionValidation loanProjectionValidation) {
         this.loanProductRepository = loanProductRepository;
+        this.loanProjectionValidation = loanProjectionValidation;
     }
 
     /**
@@ -53,7 +57,7 @@ public class LoanProjectionsServiceImpl implements LoanProjectionsService {
 
     @Override
     public LoanProjectionResponse getLoanFeeProjections(LoanProjectionRequest request) {
-        validateRequest(request);
+        loanProjectionValidation.validateRequest(request);
         try {
             // Retrieve loan product configuration from loan product entity table
             Optional<LoanProductEntity> productEntity = loanProductRepository.findByLoanType(request.getInstallmentFrequency());
@@ -67,11 +71,6 @@ public class LoanProjectionsServiceImpl implements LoanProjectionsService {
         return new LoanProjectionResponse();
     }
 
-    @Override
-    public LoanProjectionResponse getLoanInstallmentProjections(LoanProjectionRequest request) {
-        validateRequest(request);
-        return null;
-    }
 
 
     /**
@@ -96,7 +95,7 @@ public class LoanProjectionsServiceImpl implements LoanProjectionsService {
         // Check if the installment frequency is weekly
         boolean weeklyInstallment = WEEKLY.name().equalsIgnoreCase(request.getInstallmentFrequency());
         // Check if the loan duration is specified in weeks and needs to be calculated with weekly installments
-        if (weeks.name().equalsIgnoreCase(request.getLoanDurationUnit()) && MONTHLY.name().equalsIgnoreCase(request.getInstallmentFrequency())) {
+        if (WEEKS.name().equalsIgnoreCase(request.getLoanDurationUnit()) && MONTHLY.name().equalsIgnoreCase(request.getInstallmentFrequency())) {
             loanDuration *= 4;
         }
 
@@ -132,70 +131,6 @@ public class LoanProjectionsServiceImpl implements LoanProjectionsService {
         return loanProjections;
     }
 
-
-    /**
-     * Validate the LoanProjectionRequest.
-     *
-     * @param request the Loan projection request to validate
-     */
-
-    private void validateRequest(LoanProjectionRequest request) {
-        validateStartDate(request.getStartDate());
-        validateLoanDuration(request.getLoanDuration(), request.getInstallmentFrequency());
-        validateLoanDurationUnit(request);
-    }
-
-    /**
-     * Validates the loan duration unit within the given loan projection request.
-     *
-     * @param request the loan projection request to validate
-     */
-
-    private void validateLoanDurationUnit(LoanProjectionRequest request) {
-        if (weeks.name().equalsIgnoreCase(request.getLoanDurationUnit()) && MONTHLY.name().equalsIgnoreCase(request.getInstallmentFrequency())) {
-            throw new LoanProjectionException("Un supported installment frequencies", HttpStatus.BAD_REQUEST);
-        }
-    }
-
-
-    /**
-     * Validates the start date.
-     *
-     * @param startDate the start date to be validated
-     */
-
-    private void validateStartDate(String startDate) {
-        if (!DateUtil.isDateNowOrFuture(startDate)) {
-            throw new LoanProjectionException("The start date must be today or in the future.", HttpStatus.BAD_REQUEST);
-        }
-    }
-
-
-    /**
-     * Validate if the loan duration is allowed based on the installment frequency.
-     *
-     * @param loanDuration         the loan duration
-     * @param installmentFrequency the loan frequency
-     */
-
-    private void validateLoanDuration(int loanDuration, String installmentFrequency) {
-        int maxDuration = getMaxLoanDuration(installmentFrequency);
-        if (loanDuration > maxDuration) {
-            throw new LoanProjectionException("The loan duration exceeds the maximum allowed.", HttpStatus.BAD_REQUEST);
-        }
-    }
-
-
-    /**
-     * Get the maximum loan duration based on the given installment frequency.
-     *
-     * @param installmentFrequency the installment frequency (e.g., "WEEKLY" or "MONTHLY")
-     * @return the maximum loan duration
-     */
-
-    private int getMaxLoanDuration(String installmentFrequency) {
-        return (WEEKLY.name().equalsIgnoreCase(installmentFrequency)) ? 4 * 12 : 12;
-    }
 
 
 }
