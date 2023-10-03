@@ -6,9 +6,13 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.jia.loanprojections.application.util.ToUpperCaseDeserializer;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
+@AllArgsConstructor
 public class LoanProjectionRequest {
 
     @NotNull(message = "The [loan_amount] field cannot be null. Please provide a valid value for the loan amount.")
@@ -32,7 +36,7 @@ public class LoanProjectionRequest {
     @NotNull(message = "The [loan_duration_unit] field cannot be null. Please provide a valid value for the loan duration unit.")
     @JsonProperty("loan_duration_unit")
     @JsonDeserialize(using = ToUpperCaseDeserializer.class)
-    @Pattern(regexp = "^(MONTHS|WEEKS)$", message = "Invalid [loan_duration_unit] value. Please specify the duration unit as either 'weeks' or 'months'.")
+    @Pattern(regexp = "^(MONTHS|WEEKS|DAYS)$", message = "Invalid [loan_duration_unit] value. Please specify the duration unit as either 'days', 'weeks' or 'months'.")
     private String loanDurationUnit;
 
 

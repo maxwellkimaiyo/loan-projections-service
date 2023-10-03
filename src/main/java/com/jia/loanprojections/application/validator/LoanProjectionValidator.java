@@ -1,4 +1,4 @@
-package com.jia.loanprojections.application.validation;
+package com.jia.loanprojections.application.validator;
 
 import com.jia.loanprojections.application.exceptions.LoanProjectionException;
 import com.jia.loanprojections.infrastructure.controller.request.LoanProjectionRequest;
@@ -11,7 +11,7 @@ import static com.jia.loanprojections.domain.enums.LoanInstallmentTypes.MONTHLY;
 import static com.jia.loanprojections.domain.enums.LoanInstallmentTypes.WEEKLY;
 
 @Component
-public class LoanProjectionValidation {
+public class LoanProjectionValidator {
 
 
     /**

@@ -1,4 +1,4 @@
-package com.jia.loanprojections.infrastructure.controller.response;
+package com.jia.loanprojections.infrastructure.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class CustomErrorsDTO {
+public class CustomErrorsDto {
 
     /**
      * The local date & time

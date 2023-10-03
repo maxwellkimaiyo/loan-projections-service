@@ -1,7 +1,7 @@
 package com.jia.loanprojections.application.service.loanInstalmentProjection;
 
 import com.jia.loanprojections.application.common.LoanProjectionCalculator;
-import com.jia.loanprojections.application.validation.LoanProjectionValidation;
+import com.jia.loanprojections.application.validator.LoanProjectionValidator;
 import com.jia.loanprojections.domain.entities.LoanProductEntity;
 import com.jia.loanprojections.domain.repository.LoanProductRepository;
 import com.jia.loanprojections.infrastructure.controller.request.LoanProjectionRequest;
@@ -38,13 +38,13 @@ public class LoanInstalmentProjectionsServiceImpl implements LoanInstalmentProje
 
     final LoanProductRepository loanProductRepository;
     private final LoanProjectionCalculator loanProjectionCalculator;
-    final LoanProjectionValidation loanProjectionValidation;
+    final LoanProjectionValidator loanProjectionValidator;
 
     @Autowired
-    public LoanInstalmentProjectionsServiceImpl(LoanProductRepository loanProductRepository, LoanProjectionCalculator loanProjectionCalculator, LoanProjectionValidation loanProjectionValidation) {
+    public LoanInstalmentProjectionsServiceImpl(LoanProductRepository loanProductRepository, LoanProjectionCalculator loanProjectionCalculator, LoanProjectionValidator loanProjectionValidator) {
         this.loanProductRepository = loanProductRepository;
         this.loanProjectionCalculator = loanProjectionCalculator;
-        this.loanProjectionValidation = loanProjectionValidation;
+        this.loanProjectionValidator = loanProjectionValidator;
     }
 
 
@@ -58,7 +58,7 @@ public class LoanInstalmentProjectionsServiceImpl implements LoanInstalmentProje
     @Override
     @Cacheable(value = "getLoanInstallmentProjections")
     public LoanProjectionResponse getLoanInstallmentProjections(LoanProjectionRequest request) {
-        loanProjectionValidation.validateRequest(request);
+        loanProjectionValidator.validateRequest(request);
         try {
             // Retrieve loan product configuration from loan product entity table
             Optional<LoanProductEntity> productEntity = loanProductRepository.findByLoanInstalmentType(request.getInstallmentFrequency());

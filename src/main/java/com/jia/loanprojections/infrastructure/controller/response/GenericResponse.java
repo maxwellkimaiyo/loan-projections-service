@@ -2,6 +2,7 @@ package com.jia.loanprojections.infrastructure.controller.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.jia.loanprojections.infrastructure.controller.dto.CustomErrorsDto;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class GenericResponse<T>  {
      * the error lists
      */
     @JsonProperty("errors")
-    List<CustomErrorsDTO> errors = new ArrayList<>();
+    List<CustomErrorsDto> errors = new ArrayList<>();
 
 
     /**
@@ -50,7 +51,7 @@ public class GenericResponse<T>  {
      * add custom errors to the response
      * @param errorMessage the message error
      */
-    public void addCustomErrorMessage(CustomErrorsDTO errorMessage) {
+    public void addCustomErrorMessage(CustomErrorsDto errorMessage) {
         this.errors.add(errorMessage);
     }
 

@@ -2,7 +2,7 @@ package com.jia.loanprojections.infrastructure.controller.exceptionHandler;
 
 
 import com.jia.loanprojections.application.exceptions.LoanProjectionException;
-import com.jia.loanprojections.infrastructure.controller.response.CustomErrorsDTO;
+import com.jia.loanprojections.infrastructure.controller.dto.CustomErrorsDto;
 import com.jia.loanprojections.infrastructure.controller.response.GenericResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,7 +80,7 @@ public class GlobalExceptionHandler {
      */
     private ResponseEntity<GenericResponse<Object>> buildErrorResponseEntity(String message, HttpStatus status) {
         GenericResponse<Object> model = new GenericResponse<>(message, null);
-        model.addCustomErrorMessage(CustomErrorsDTO.builder()
+        model.addCustomErrorMessage(CustomErrorsDto.builder()
                 .message(message)
                 .status(status.name())
                 .timestamp(LocalDateTime.now())
@@ -98,7 +98,7 @@ public class GlobalExceptionHandler {
      */
     private ResponseEntity<GenericResponse<Object>> buildErrorResponseEntity(List<String> message, HttpStatus status) {
         GenericResponse<Object> model = new GenericResponse<>(message.get(0), null);
-        message.forEach(errorMessage -> model.addCustomErrorMessage(CustomErrorsDTO.builder()
+        message.forEach(errorMessage -> model.addCustomErrorMessage(CustomErrorsDto.builder()
                 .message(errorMessage)
                 .status(status.name())
                 .timestamp(LocalDateTime.now())
@@ -113,7 +113,7 @@ public class GlobalExceptionHandler {
      */
     private ResponseEntity<GenericResponse<Object>> buildErrorResponseEntity() {
         GenericResponse<Object> model = new GenericResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.name(), null);
-        model.addCustomErrorMessage(CustomErrorsDTO.builder()
+        model.addCustomErrorMessage(CustomErrorsDto.builder()
                 .message("An internal server error occurred while processing your request. Please try again later or contact support for assistance.")
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.name())
                 .timestamp(LocalDateTime.now())
