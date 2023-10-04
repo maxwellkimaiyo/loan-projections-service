@@ -158,8 +158,8 @@
                 </executions>
                 <configuration>
                     <driver>org.postgresql.Driver</driver>
-                    <url>jdbc:postgresql://localhost:5432/loanprojectiondb</url>
-                    <user>loanprojections</user>
+                    <url>jdbc:postgresql://localhost:5433/loanprojectiondb</url>
+                    <user>postgres</user>
                     <password>nE5kMc7JCGNqwDQM</password>
                     <baselineOnMigrate>true</baselineOnMigrate>
                     <schemas>public</schemas>

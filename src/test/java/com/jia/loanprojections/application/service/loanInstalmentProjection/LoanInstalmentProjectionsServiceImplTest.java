@@ -51,7 +51,7 @@ class LoanInstalmentProjectionsServiceImplTest {
 
     @Test
     @DisplayName("Test get Loan Installment Projections")
-    void testGetLoanInstallmentProjectionsTest() {
+    void testGetLoanInstallmentProjections() {
 
         // Arrange
         LoanFeeEntity loanFeeEntity = new LoanFeeEntity();
