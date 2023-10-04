@@ -104,6 +104,11 @@ public class LoanFeeProjectionsServiceImpl implements LoanFeeProjectionsService 
         double interestAmount = loanProjectionCalculator.calculateInterestAmount(principalAmount, loanInterestRate);
 
         for (int duration = 1; duration <= loanDuration; duration++) {
+
+            if (!isWeeklyInstallment) {
+                monthsSinceLastServiceFee++;
+            }
+
             LocalDate dateIncurred = startDate.plus(duration, isWeeklyInstallment ? ChronoUnit.WEEKS : ChronoUnit.MONTHS);
 
             if (isWeeklyInstallment && duration % 2 == 0) {
@@ -117,9 +122,7 @@ public class LoanFeeProjectionsServiceImpl implements LoanFeeProjectionsService 
 
             loanFeeProjections.add(new LoanProjections(dateIncurred, (long) interestAmount));
 
-            if (!isWeeklyInstallment) {
-                monthsSinceLastServiceFee++;
-            }
+
 
         }
 

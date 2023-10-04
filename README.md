@@ -25,7 +25,7 @@ Endpoint: `POST http://localhost:8080/api/v1/loans/projections/fees`
 
 Request:
 ```console
-> curl --location 'http://localhost:8080/api/v1/loans/projections/fees' \
+curl --location 'http://localhost:8080/api/v1/loans/projections/fees' \
 --header 'Content-Type: application/json' \
 --data '{
     "loan_amount": 3000,
@@ -41,7 +41,7 @@ Endpoint: `POST http://localhost:8080/api/v1/loans/projections/installments`
 
 Request:
 ```console
-> curl --location 'http://localhost:8080/api/v1/loans/projections/installments' \
+curl --location 'http://localhost:8080/api/v1/loans/projections/installments' \
 --header 'Content-Type: application/json' \
 --data '{
     "loan_amount": 3000,

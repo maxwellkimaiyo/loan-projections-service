@@ -103,6 +103,11 @@ public class LoanInstalmentProjectionsServiceImpl implements LoanInstalmentProje
         double interestAmount = loanProjectionCalculator.calculateInterestAmount(principalAmount, loanInterestRate);
 
         for (int duration = 1; duration <= loanDuration; duration++) {
+
+            if (!isWeeklyInstallment) {
+                monthsSinceLastServiceFee++;
+            }
+
             LocalDate dateIncurred = startDate.plus(duration, isWeeklyInstallment ? ChronoUnit.WEEKS : ChronoUnit.MONTHS);
 
             double serviceFee = 0.0;
@@ -117,9 +122,7 @@ public class LoanInstalmentProjectionsServiceImpl implements LoanInstalmentProje
             double totalInstalmentAmount = (interestAmount + instalmentAmount + serviceFee);
             loanInstalmentProjections.add(new LoanProjections(dateIncurred, (long) totalInstalmentAmount));
 
-            if (!isWeeklyInstallment) {
-                monthsSinceLastServiceFee++;
-            }
+
         }
 
         return loanInstalmentProjections;
