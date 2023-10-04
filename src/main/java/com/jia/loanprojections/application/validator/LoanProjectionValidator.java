@@ -1,6 +1,6 @@
 package com.jia.loanprojections.application.validator;
 
-import com.jia.loanprojections.application.exceptions.LoanProjectionException;
+import com.jia.loanprojections.application.exception.LoanProjectionException;
 import com.jia.loanprojections.infrastructure.controller.request.LoanProjectionRequest;
 import com.jia.loanprojections.application.util.DateUtil;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.jia.loanprojections.domain.entities;
+package com.jia.loanprojections.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

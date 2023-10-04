@@ -1,7 +1,7 @@
 package com.jia.loanprojections.infrastructure.controller.exceptionHandler;
 
 
-import com.jia.loanprojections.application.exceptions.LoanProjectionException;
+import com.jia.loanprojections.application.exception.LoanProjectionException;
 import com.jia.loanprojections.infrastructure.controller.dto.CustomErrorsDto;
 import com.jia.loanprojections.infrastructure.controller.response.GenericResponse;
 import org.slf4j.Logger;

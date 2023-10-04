@@ -1,6 +1,6 @@
 package com.jia.loanprojections.application.util;
 
-import com.jia.loanprojections.application.exceptions.LoanProjectionException;
+import com.jia.loanprojections.application.exception.LoanProjectionException;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;

@@ -1,6 +1,6 @@
 package com.jia.loanprojections.application.validator;
 
-import com.jia.loanprojections.application.exceptions.LoanProjectionException;
+import com.jia.loanprojections.application.exception.LoanProjectionException;
 import com.jia.loanprojections.infrastructure.controller.request.LoanProjectionRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -3,8 +3,8 @@ package com.jia.loanprojections.application.service.loanFeeProjection;
 
 import com.jia.loanprojections.application.common.LoanProjectionCalculator;
 import com.jia.loanprojections.application.validator.LoanProjectionValidator;
-import com.jia.loanprojections.domain.entities.LoanFeeEntity;
-import com.jia.loanprojections.domain.entities.LoanProductEntity;
+import com.jia.loanprojections.domain.entity.LoanFeeEntity;
+import com.jia.loanprojections.domain.entity.LoanProductEntity;
 import com.jia.loanprojections.domain.repository.LoanProductRepository;
 import com.jia.loanprojections.infrastructure.controller.request.LoanProjectionRequest;
 import com.jia.loanprojections.infrastructure.controller.response.LoanProjectionResponse;

@@ -1,6 +1,6 @@
 package com.jia.loanprojections.application.util;
 
-import com.jia.loanprojections.application.exceptions.LoanProjectionException;
+import com.jia.loanprojections.application.exception.LoanProjectionException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

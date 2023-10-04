@@ -1,6 +1,6 @@
-package com.jia.loanprojections.infrastructure.repositories;
+package com.jia.loanprojections.infrastructure.repository;
 
-import com.jia.loanprojections.domain.entities.LoanProductEntity;
+import com.jia.loanprojections.domain.entity.LoanProductEntity;
 import com.jia.loanprojections.domain.repository.LoanProductRepository;
 import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;

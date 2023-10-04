@@ -1,7 +1,7 @@
 package com.jia.loanprojections.domain.repository;
 
 import com.jia.loanprojections.util.CommonPostgresqlContainer;
-import com.jia.loanprojections.domain.entities.LoanProductEntity;
+import com.jia.loanprojections.domain.entity.LoanProductEntity;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

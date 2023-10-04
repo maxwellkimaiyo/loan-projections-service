@@ -1,6 +1,6 @@
 package com.jia.loanprojections.domain.repository;
 
-import com.jia.loanprojections.domain.entities.LoanProductEntity;
+import com.jia.loanprojections.domain.entity.LoanProductEntity;
 
 import java.util.Optional;
 

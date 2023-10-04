@@ -6,7 +6,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.1.4</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>com.jia</groupId>
     <artifactId>loan-projections-service</artifactId>
@@ -18,7 +18,6 @@
         <java.version>17</java.version>
         <openApi.version>2.1.0</openApi.version>
         <org.project-lombok.version>1.18.28</org.project-lombok.version>
-        <swagger.version>2.9.2</swagger.version>
         <testcontainers.version>1.16.0</testcontainers.version>
     </properties>
     <dependencies>
