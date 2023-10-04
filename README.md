@@ -30,9 +30,9 @@ curl --location 'http://localhost:8080/api/v1/loans/projections/fees' \
 --data '{
     "loan_amount": 3000,
     "loan_duration": 3,
-    "loan_duration_unit": "weeks",
+    "loan_duration_unit": "weeks", // can be in months or weeks
     "start_date": "01/11/2023",
-    "installment_frequency": "weekly"
+    "installment_frequency": "weekly" // can be monthly or weekly
 }'
 ```
 **Get All Applicable Installments for a Loan**
@@ -46,9 +46,9 @@ curl --location 'http://localhost:8080/api/v1/loans/projections/installments' \
 --data '{
     "loan_amount": 3000,
     "loan_duration": 3,
-    "loan_duration_unit": "months",
+    "loan_duration_unit": "months", // can be in months or weeks
     "start_date": "01/11/2023",
-    "installment_frequency": "monthly"
+    "installment_frequency": "monthly" // can be monthly or weekly
 }'
 ```
 
