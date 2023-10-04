@@ -18,13 +18,11 @@ public class DateUtil {
     public static boolean isDateNowOrFuture(String inputDate) {
 
         try {
-            // Date format to match input string
+
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-            // Parse input date string into a LocalDate object
             LocalDate dateToCheck = LocalDate.parse(inputDate, formatter);
 
-            // Get the current date
             LocalDate currentDate = LocalDate.now();
 
             // return true if date is today or in the future
